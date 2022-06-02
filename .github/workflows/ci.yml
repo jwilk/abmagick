@@ -1,0 +1,49 @@
+name: CI
+on:
+- push
+- pull_request
+jobs:
+  Python:
+    strategy:
+      matrix:
+        include:
+        - python: '3.6'
+          os: ubuntu-18.04
+        - python: '3.7'
+          os: ubuntu-20.04
+        - python: '3.8'
+          os: ubuntu-20.04
+        - python: '3.9'
+          os: ubuntu-20.04
+        - python: '3.10'
+          os: ubuntu-20.04
+        - python: '3.11-dev'
+          os: ubuntu-22.04
+    runs-on: ${{matrix.os}}
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up Python ${{matrix.python}}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{matrix.python}}
+    - name: set up APT
+      run: |
+        printf '\n\nPackage: *\nPin: release o=Ubuntu\nPin-Priority: 9999\n' | sudo tee -a /etc/apt/preferences
+        printf 'Apt::Install-Recommends "false";\n' | sudo tee -a /etc/apt/apt.conf
+        sudo apt-get update
+    - name: install ImageMagick, GraphicsMagick
+      run: |
+        sudo apt-get install imagemagick graphicsmagick
+    - name: run tests
+      run: |
+        prove -v
+    - name: run pydiatra
+      run: |
+        python3 -m pip install pydiatra
+        python3 -m pydiatra -v .
+    - name: run pyflakes
+      run: |
+        python3 -m pip install pyflakes
+        python3 -m pyflakes .
+
+# vim:ts=2 sts=2 sw=2 et
