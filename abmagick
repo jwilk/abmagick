@@ -8,6 +8,8 @@ import argparse
 import shlex
 import sys
 
+0_0  # Python >= 3.6 is required
+
 def fmtcolor(c):
     assert 0 <= c <= 0xFF
     d = f'{c:02x}'
