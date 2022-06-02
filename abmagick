@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+# encoding=UTF-8
+
+# Copyright © 2022 Jakub Wilk <jwilk@jwilk.net>
+# SPDX-License-Identifier: MIT
+
+import argparse
+import shlex
+import sys
+
+def fmtcolor(c):
+    assert 0 <= c <= 0xFF
+    d = f'{c:02x}'
+    return '#' + 3 * d
+
+def cprint(*args, end=' '):
+    for arg in args:
+        arg = str(arg)
+        print(shlex.quote(arg), end=end)
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('path', metavar='PATH')
+    ap.add_argument('--gm', action='store_true', help='use GraphicsMagick')
+    opts = ap.parse_args()
+    data = sys.stdin.buffer.read()
+    if opts.gm:
+        cprint('gm')
+    cprint('convert',
+        'xc:red',
+        '-resize', f'1x{len(data)}!',
+        '-depth', 8,
+    )
+    for n, c in enumerate(data):
+        cprint(
+            '-fill', fmtcolor(c),
+            '-draw', f'point 0,{n}'
+        )
+    cprint(f'gray:{opts.path}', end='\n')
+
+if __name__ == '__main__':
+    main()
+
+# vim:ts=4 sts=4 sw=4 et
