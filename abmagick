@@ -13,7 +13,7 @@ import sys
 
 def fmtcolor(c):
     assert 0 <= c <= 0xFF
-    d = f'{c:02x}'
+    d = f'{c:02X}'
     assert len(d) == 2
     if d[0] == d[1]:
         d = d[0]
