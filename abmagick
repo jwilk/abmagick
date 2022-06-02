@@ -14,6 +14,7 @@ import sys
 def fmtcolor(c):
     assert 0 <= c <= 0xFF
     d = f'{c:02x}'
+    assert len(d) == 2
     return '#' + 3 * d
 
 def cprint(*args, end=' '):
