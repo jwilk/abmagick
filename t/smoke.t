@@ -34,6 +34,7 @@ t()
     n+=1
     in="$tmpdir/$n.in"
     out="$tmpdir/$n.out"
+    # shellcheck disable=SC2059
     printf "$@" > "$in"
     "$prog" "${args[@]}" "$out" < "$in" | sh
     if cmp -b "$in" "$out"
