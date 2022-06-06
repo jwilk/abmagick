@@ -1,7 +1,7 @@
 .. code:: console
 
    $ abmagick hello <<< 'Hello world!'
-   convert 'xc:#6C6C6C' -resize '1x13!' -depth 8 -fill '#484848' -draw 'point 0,0' -fill '#656565' -draw 'point 0,1' -fill '#6F6F6F' -draw 'point 0,4' -fill '#202020' -draw 'point 0,5' -fill '#777' -draw 'point 0,6' -fill '#6F6F6F' -draw 'point 0,7' -fill '#727272' -draw 'point 0,8' -fill '#646464' -draw 'point 0,10' -fill '#212121' -draw 'point 0,11' -fill '#0A0A0A' -draw 'point 0,12' gray:hello
+   convert 'inline:data:image/x-portable-graymap;base64,UDUKMSAxMyAyNTUKSGVsbG8gd29ybGQhCg==' gray:hello
 
    $ cat hello
    cat: hello: No such file or directory
