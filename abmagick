@@ -26,6 +26,7 @@ def cprint(*args, end=' '):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.color = False
     ap.add_argument('path', metavar='PATH')
     ap.add_argument('--gm', action='store_true', help='use GraphicsMagick')
     opts = ap.parse_args()
